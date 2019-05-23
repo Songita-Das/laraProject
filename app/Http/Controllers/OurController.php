@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Student;
+use App\User;
+use DB;
 
 class OurController extends Controller
 {
@@ -49,6 +51,38 @@ class OurController extends Controller
         if($obj->save()){
             return redirect('/list');
         }
+    }
+
+     public function login(){
+        return view('login');
+    }
+
+    public function postlogin(Request $request)
+    {
+   $email = $request->email;
+   $password = $request->password;
+   $user = User::where('email', '=' ,$email)
+             ->where('password', '=' ,$password)
+            ->first();
+   if($user){
+    $request->session()->put('username',$user->name);
+    $request->session()->put('useremail',$user->email);
+    $request->session()->put('userrole',$user->role);
+
+    return redirect()->route('dashboard');
+}
+    }
+
+    public function dashboard(){
+        return view('dashboard');
+    }
+    public function test(){
+        $data = DB::table('hire_books as hb')
+            ->Join('users','hb.student_id','users.id')
+            ->Join('books','hb.book_id','books.id')
+            ->select('users.name as username','books.name as bookname','hb.hire_date')
+            ->get();
+        dd($data);
     }
 }
 

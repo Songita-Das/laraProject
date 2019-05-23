@@ -32,5 +32,9 @@ Route::post('/store ', 'OurController@store' );
 
 Route::get('/list ', 'OurController@list' );
 Route::get('/edit/{id} ', 'OurController@edit' );
-Route::post('/update/{id} ', 'OurController@update' );
+//Route::post('/update/{id} ', 'OurController@update' );
+Route::get('login','OurController@login');
+Route::post('loginpost','OurController@postlogin')->name('post_login');
+Route::get('dashboard','OurController@dashboard')->name('dashboard');
+Route::get('test','OurController@test');
    

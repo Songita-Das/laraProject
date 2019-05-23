@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateStudentsTable extends Migration
+class CreateBooksTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,14 +13,13 @@ class CreateStudentsTable extends Migration
      */
     public function up()
     {
-        Schema::create('students', function (Blueprint $table) {
+        Schema::create('books', function (Blueprint $table) {
             $table->bigIncrements('id');
-             $table->string('name');
-              $table->string('email');
-                $table->date('date_of_birth')->nullable();
-                 $table->string('residance');
-
-                
+             $table->unsignedBigInteger('book_category_id');
+            $table->foreign('book_category_id')->references('id')->on('book_categories');
+           $table->string('name');
+           $table->string('isbn');
+           $table->string('author');
             $table->timestamps();
         });
     }
@@ -32,6 +31,6 @@ class CreateStudentsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('students');
+        Schema::dropIfExists('books');
     }
 }
